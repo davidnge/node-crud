@@ -1,0 +1,11 @@
+{
+  "name": "node-crud",
+  "version": "1.0.0",
+  "description": "a simple crud app using plain node (no framework)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "davidnge",
+  "license": "ISC"
+}
