@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var consolidate = require('consolidate');
 var dust = require('dustjs-helpers');
 var pg = require('pg');
-var constring = "postgres://david:likenoother@localhost:5432/recipedb";
+var constring = "postgres://user:password@localhost:5432/recipedb";
 var app = express();
 
 app.engine('dust', consolidate.dust);
@@ -20,11 +20,11 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.get('/', function(req,res){
 
-// connect to our database
+// connect to postgres database
 	pg.connect(constring, function (err, client, done) {
 	  if (err) throw err;
 
-	  // execute a query on our database
+	  // execute a query on database
 	  client.query('SELECT * FROM recipes', function (err, result) {
 	    if (err) throw err;
 
@@ -56,7 +56,7 @@ app.delete('/delete/:id', function(req, res){
 
 	pg.connect(constring, function (err, client, done) {
 		client.query('DELETE FROM recipes WHERE id = $1', [req.params.id]);
-	//req.body.name, req.body.ingredients, req.body.directions
+
 	 done();
 	 res.sendStatus(200);
 
@@ -69,9 +69,7 @@ app.post('/edit', function(req, res){
 	 //console.log("id:"+request.params.id);
 	pg.connect(constring, function (err, client, done) {
 		client.query('UPDATE recipes set name=$1, ingredients=$2, direction= $3 WHERE id = $4', [req.body.name, req.body.ingredients, req.body.directions, req.body.id]);
-	//req.body.name, req.body.ingredients, req.body.directions
-	 //done();
-	 //res.sendStatus(200);
+
 
 	 res.redirect('/');
 
